@@ -4,13 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.libertymutual.goforcode.hello_world_again.models.SurveyResults;
+
 @Controller
 public class HomeController {
 	
-	private int russetCount;
-	private int sweetCount;
-	private int goldenCount;
-	
+	private SurveyResults results = new SurveyResults();
 
 	@RequestMapping("/")
 	public String defaultPage() {
@@ -33,19 +32,16 @@ public class HomeController {
 			mv.addObject("userResponse", answer);
 			
 			if (answer.equals("Russet")) {
-				russetCount += 1;
-				//russetCount++;  Same thing, but considered "bad form"
+				results.registerRussetVote();
 			}
 			if (answer.equals("Sweet")) {
-				sweetCount += 1;
+				results.registerSweetVote();
 			}
 			if (answer.equals("Golden")) {
-				goldenCount += 1;
+				results.registerGoldenVote();
 			}
 			
-			mv.addObject("russetCount",russetCount );
-			mv.addObject("sweetCount",sweetCount );
-			mv.addObject("goldenCount",goldenCount );
+			mv.addObject("results", results);
 			
 			return mv;
 	}
